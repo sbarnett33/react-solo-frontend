@@ -1,24 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { Routes, Route, Link } from "react-router-dom";
+import Navbar from "./components/Navbar";
+import Dashboard from "./components/Dashboard";
+//import Lists from "./components/Lists";
+//import Food from './components/Food';
+import React from "react";
 
-function App() {
-
-  let callBackend = (e) => {
-    fetch('http://localhost:3001/').then(res => res.json()).then(data => {
-      console.log(data)
-    })
-  }
-
+const App = () => {
   return (
-    <div className="App">
-      
-      <div>
-        <button onClick={callBackend}>
-           Calling Backend
-        </button>
-      </div> 
+    <div className={"app-container"}>
+      {<Navbar />}
+      <main>
+        <Routes>
+          <Route path="/" element={<Dashboard />} />
+          {/* <Route path="/food" element={<Food />} />
+          <Route path="/lists" element={<Lists />} /> */}
+        </Routes>
+      </main>
     </div>
   );
-}
+};
 
 export default App;

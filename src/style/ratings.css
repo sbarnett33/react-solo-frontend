@@ -1,0 +1,10 @@
+.table-title {
+    font-size: small;
+    font-weight: bold;
+    padding-top: 4rem;
+}
+
+.table, table {
+    table-layout: fixed;
+    overflow: scroll;
+}

@@ -1,0 +1,17 @@
+.lists-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex
+}
+
+.lists-title{
+  padding: 4rem;
+  font-size: 2rem;
+  font-weight: 500;
+  align-self: center;  
+}
+
+.lists-options {
+    display: flex;
+    align-self: center;
+}

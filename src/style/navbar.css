@@ -1,0 +1,23 @@
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    background-color: rgb(139, 139, 134);
+    width: 100%;
+    max-height: 12vh;
+    font-weight: bolder;
+    font-display: center;
+    
+}
+
+.nav-item .nav-link:hover{
+    background-color: rgb(206, 125, 44);
+}
+
+.nav-item .nav-link:focus {
+    background-color: rgb(35, 145, 35)
+}
+
+.nav-link .icon:hover {
+    color: rgb(202, 175, 221);
+}
+
