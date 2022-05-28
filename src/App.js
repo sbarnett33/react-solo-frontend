@@ -2,8 +2,8 @@ import "./App.css";
 import { Routes, Route, Link } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Dashboard from "./components/Dashboard";
-//import Lists from "./components/Lists";
-//import Food from './components/Food';
+import Lists from "./components/Lists";
+import Search from "./components/Search";
 import React from "react";
 
 const App = () => {
@@ -13,8 +13,8 @@ const App = () => {
       <main>
         <Routes>
           <Route path="/" element={<Dashboard />} />
-          {/* <Route path="/food" element={<Food />} />
-          <Route path="/lists" element={<Lists />} /> */}
+          <Route path="/lists" element={<Lists />} />
+          <Route path="/search" element={<Search />} />
         </Routes>
       </main>
     </div>

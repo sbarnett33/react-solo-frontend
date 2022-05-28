@@ -8,3 +8,10 @@
     table-layout: fixed;
     overflow: scroll;
 }
+
+.food-list{
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+}

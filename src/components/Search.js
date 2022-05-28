@@ -1,75 +1,91 @@
-import React, { useState } from "react";
-import '../styles/search.css';
-import FoodCard from '../FoodCard';
-import { connect, useCallback } from "react";
-import { updateFood } from '../reduxactions';
-import { Link } from 'react-router-dom';
-//import store from "../redux/store";
+import React, { useState, useEffect } from "react";
+import "../style/search.css";
+import Card from "./Card";
 
 
-const Search = (store) => {
+const Search = () => {
+  const [foodType, setFoodType] = useState("All Food");
+  const [food, setFood] = useState([]);
+  const [rating, setRating] = useState({});
 
-    const [foodType, setFoodType] = useState("All Food");
-    const callback = useCallback();
-    
-    const handleClick = (e) => {
-        setFoodType(e.target.value);
+  const handleFoodTypeClick = (e) => {
+    setFoodType(e.target.value);
+  };
+  const handleRatingsClick = (id, e) => {
+    console.log(e.target.value)
+    const body = { rating: e.target.value };
+    fetch(`http://localhost:3001/reaction/1/${id}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        setRating(data);
+      });
+  };
 
-        callback(updateFood(id, rating));
+  useEffect(() => {
+    fetch("http://localhost:3001/food")
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        setFood(data);
+      });
+  }, []);
 
-        alert(`Food Added`);
+  const filterRender = () => {
+    if (foodType === "All Food") {
+      return food.map((food) => (
+        <Card
+          key={food.id}
+          brand={food.brand}
+          flavor={food.flavor}
+          type={food.type}
+          image={food.picture}
+          onClick={(e) => handleRatingsClick(food.id, e)}
+        />
+      ));
+    } else {
+      const filteredFood = food.filter((food) => food.type === foodType);
+      return filteredFood.length > 0 ? (
+        filteredFood.map((food) => (
+          <Card
+            key={food.id}
+            brand={food.brand}
+            flavor={food.flavor}
+            type={food.type}
+            image={food.picture}
+            onClick={(e) => handleRatingsClick(food.id, e)}
+          />
+        ))
+      ) : (
+        <p className="out-of-food">No Food</p>
+      );
     }
+  };
 
-    const filterRender = () => {
-        let foodInStore = store.foodStore.dogFood;
+  const searchOptions = ["All Food", "Raw", "Freeze Dried", "Kibble"];
+  return (
+    <div className="search-page">
+      <div className="search-title">Find Your Favs</div>
+      <div className="search-options">
+        {searchOptions.map((option, index) => (
+          <input
+            key={index}
+            type="button"
+            className="search-btn"
+            value={option}
+            onClick={handleFoodTypeClick}
+          />
+        ))}
+      </div>
+      <div className="cards-container">{filterRender()}</div>
+    </div>
+  );
+};
 
-        if (!foodInStore.length) {
-            return <p className='out-of-food'>No Food <Link to='/'></Link></p>
-        }
-
-        if (foodType === "All Dog Food") {
-            return foodInStore.map(food => (
-                <FoodCard
-                    key={food.id}
-                    brandName={food.brand}
-                    type={food.type}
-                    image={food.pic}
-                    onCllick={(e) => handleRatingsClick(food.id, e)}
-                />   
-            ));
-        }
-
-        const filteredFood = foodInStore.filter(food => food.type === foodType);
-        return (filteredFood.length > 0) ? filteredFood.map(food => (
-            <FoodCard
-                    key={food.id}
-                    brandName={food.brand}
-                    type={food.type}
-                    image={food.pic}
-                    onCllick={(e) => handleRatingsClick(food.id, e)}
-            />   
-            
-        )) : <p className="out-of-food">No Food</p>
-
-    }
-
-    const searchOptions = ["All Food", "Raw", "Freeze-Dried", "Kibble"]
-    return (
-        <div className="search-page">
-            <div className="search-title">Search for Food</div>
-            <div className="search-options">
-                {searchOptions.map((option, index) => <input key={index} type="button" className="search-btn" value={option} onClick={handleClick} />)}
-            </div>
-            <div className="cards-container">
-                {filterRender()}
-            </div>
-        </div>
-    )
-
-}
-
-const mapStateToProps = state => ({
-    foodStore: store.food,
-})
-
-export default connect(mapStateToProps)(Search);
+export default Search;

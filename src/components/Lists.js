@@ -1,66 +1,64 @@
-import React, { useState } from 'react';
-import '../styles/lists.css';
-import Ratings from '../ratings';
-import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import Button from 'react-bootstrap/Button';
+import React, { useState, useEffect } from "react";
+import "../style/lists.css";
+import Ratings from "./Ratings.js";
+import { Link } from "react-router-dom";
 
+const Lists = () => {
+  const [ratingList, setRatingList] = useState("All Ratings");
+  const [ratings, setRatings] = useState([]);
 
-const Lists = (store) => {
-    const [ratingList, setRatingList] = useState('favorite');
+  useEffect(() => {
+    fetch("http://localhost:3001/ratings")
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        setRatings(data);
+      });
+  }, []);
 
-    const handleClick = (rating) => {
-        setRatingList(rating);
+  const handleClick = (rating) => {
+    setRatingList(rating);
+  };
 
-    }
-    
-    const filterRender = () => {
-        let foodInStore = store.foodStore.dogFood;
+  const filterRender = () => {
+    if (ratingList === "All Ratings") {
+      return  (
+        <Ratings
+          ratingList={ratings}
+          rating={ratingList.toUpperCase()}
+        />
+      );
+    } else {
+    const filteredRatings = ratings.filter(
+      (rating) => rating.name === ratingList
+    );
+    return filteredRatings.length > 0 ? (
+      <Ratings ratingList={filteredRatings} rating={ratingList.toUpperCase()} />
+    ) : (
+      <Link to="/search"></Link>
+    );
+  }};
 
-        if (!foodInStore.length) {
-            return <p className='out-of-food'>No Food <Link to='/'></Link></p>
-        }
+  return (
+    <div className="lists-container">
+      <div className="lists-title">Roscoe + Elby's List</div>
+      <div className="lists-options">
+        <input
+          type="button"
+          className='"list-link'
+          value="  🦴 "
+          onClick={() => handleClick("Like")}
+        />
+        <input
+          type="button"
+          className='"list-link'
+          value="👾"
+          onClick={() => handleClick("Dislike")}
+        />
+      </div>
+      <div className="food-list">{filterRender()}</div>
+    </div>
+  );
+};
 
-        
-
-        const filteredFoods = foodInStore.filter(food => food.ratings === Ratings);
-        return (
-        filteredFoods.length > 0) ? <Ratings foodList={filteredFoods} rating={Ratings.toUpperCase()} /> : <Link to='/search'></Link> 
-    }
-
-    return (
-        <div className='list-container'>
-            <div className='lists-title'>Roscoe + Elby's List</div>
-            <div className='list-options'>
-                <input type='button' className='"list-link' value='Favorites' onClick={() => handleClick('favorite')} />
-                <input type='button' className='"list-link' value='Nasty' onClick={() => handleClick('nasty')} />
-            </div>
-            <div className='food-list'>
-                {filterRender()}
-            </div>
-        </div>
-    )
-
-
-    
-    
-
-}
-
-
-<Card>
-  <Card.Header as="h5">Featured</Card.Header>
-  <Card.Body>
-    <Card.Title>Special title treatment</Card.Title>
-    <Card.Text>
-      With supporting text below as a natural lead-in to additional content.
-    </Card.Text>
-    <Button variant="primary">Go somewhere</Button>
-  </Card.Body>
-</Card>
-
-const mapStateToProps = state => ({
-    foodStore: state.foods,
-})
-
-export default connect(mapStateToProps)(Lists);
+export default Lists;

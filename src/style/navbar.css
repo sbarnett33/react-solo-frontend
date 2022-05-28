@@ -3,9 +3,11 @@
     justify-content: space-between;
     background-color: rgb(139, 139, 134);
     width: 100%;
-    max-height: 12vh;
+    max-height: 17vh;
     font-weight: bolder;
     font-display: center;
+    margin: 0;
+    padding: 0;
     
 }
 
@@ -19,5 +21,20 @@
 
 .nav-link .icon:hover {
     color: rgb(202, 175, 221);
+    
 }
 
+.navbar-nav {
+    display: flex;
+    
+
+}
+
+.nav-item {
+    list-style: none;
+    padding: 5px;
+}
+
+.nav-brand {
+    align-self: center;
+}

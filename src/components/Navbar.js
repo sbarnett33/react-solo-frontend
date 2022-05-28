@@ -8,7 +8,7 @@ import "../style/navbar.css";
 const Navbar = () => {
     return (
         <nav className='navbar navbar-dark navbar-expand'>
-            <span className='nav-brand mb-0 h1'>The Dog Food Critics</span>
+            <span className='nav-brand mb-0 h3'>The Food Critics</span>
             <ul className='navbar-nav'>
                 <li className='nav-item'>
                     <NavLink exact to="/" className='nav-link'><FontAwesomeIcon className='icon' icon={faHome}/></NavLink>
