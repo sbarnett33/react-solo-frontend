@@ -2,17 +2,16 @@ import React, { useState, useEffect } from "react";
 import "../style/search.css";
 import Card from "./Card";
 
-
 const Search = () => {
   const [foodType, setFoodType] = useState("All Food");
   const [food, setFood] = useState([]);
-  const [rating, setRating] = useState({});
+  const [setRating] = useState({});
 
   const handleFoodTypeClick = (e) => {
     setFoodType(e.target.value);
   };
   const handleRatingsClick = (id, e) => {
-    console.log(e.target.value)
+    console.log(e.target.value);
     const body = { rating: e.target.value };
     fetch(`http://localhost:3001/reaction/1/${id}`, {
       method: "POST",

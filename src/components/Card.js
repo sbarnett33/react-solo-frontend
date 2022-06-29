@@ -27,7 +27,9 @@ const Card = (props) => {
           data-tip
           data-for="fav"
         >
-          🦴
+          <span role="img" aria-label="bone">
+            🦴
+          </span>
         </button>
         <ReactTooltip
           id="fav"
@@ -44,7 +46,9 @@ const Card = (props) => {
           data-tip
           data-for="nasty"
         >
-          👾
+          <span role="img" aria-label="monster">
+            👾
+          </span>
         </button>
         <ReactTooltip
           id="nasty"
