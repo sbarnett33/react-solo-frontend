@@ -28,7 +28,7 @@ const Search = () => {
   };
 
   useEffect(() => {
-    fetch("https://the-critics.herokuapp.com/the-critics.git/food")
+    fetch("https://the-critics.herokuapp.com/food")
       .then((res) => res.json())
       .then((data) => {
         console.log(data);

@@ -8,7 +8,7 @@ const Lists = () => {
   const [ratings, setRatings] = useState([]);
 
   useEffect(() => {
-    fetch("https://the-critics.herokuapp.com/the-critics.git/ratings")
+    fetch("https://the-critics.herokuapp.com/ratings")
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
