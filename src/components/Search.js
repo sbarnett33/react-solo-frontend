@@ -13,7 +13,7 @@ const Search = () => {
   const handleRatingsClick = (id, e) => {
     console.log(e.target.value);
     const body = { rating: e.target.value };
-    fetch(`http://localhost:3001/reaction/1/${id}`, {
+    fetch(`https://git.heroku.com/the-critics.git/reaction/1/${id}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -28,7 +28,7 @@ const Search = () => {
   };
 
   useEffect(() => {
-    fetch("http://localhost:3001/food")
+    fetch("https://git.heroku.com/the-critics.git/food")
       .then((res) => res.json())
       .then((data) => {
         console.log(data);

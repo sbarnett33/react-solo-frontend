@@ -4,7 +4,7 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
 const Ratings = (props) => {
   const handleTrashClick = (reaction_id) => {
-    fetch(`http://localhost:3001/reaction/${reaction_id}`, {
+    fetch(`https://git.heroku.com/the-critics.git/reaction/${reaction_id}`, {
       method: "DELETE",
     })
       .then((res) => res.json)
